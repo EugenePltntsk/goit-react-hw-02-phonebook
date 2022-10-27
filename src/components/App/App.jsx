@@ -1,0 +1,66 @@
+import { ContactForm } from 'components/ContactForm';
+import { ContactList } from 'components/ContactList';
+import { nanoid } from 'nanoid';
+import { Component } from 'react';
+import { Button, Form, Input, Item, Label, List } from './App.styled';
+
+export class App extends Component {
+  state = {
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
+    filter: '',
+   
+  };
+
+  saveDataFromInput = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
+
+  saveDataToState = (name, number) => {
+   
+    const newContact = {
+      id: nanoid(),
+      name,
+      number,
+    };
+    this.setState(prevState => ({
+      contacts: [...prevState.contacts, newContact],
+    }));
+    
+  };
+
+  getFilteredContacts = e => {
+    return this.state.contacts.filter(item => item.name.toLowerCase().includes(this.state.filter.toLowerCase()))
+  }
+
+  render() {
+    
+    return (
+      <>
+       <ContactForm saveDataToState={this.saveDataToState}/>
+       
+        <Label>
+          {' '}
+          Find contacts by name
+          <Input
+            name="filter"
+            value={this.state.filter.trim()}
+            onChange={this.saveDataFromInput}
+            type="text"
+          />
+        </Label>
+
+        <ContactList contacts={this.getFilteredContacts()} />
+
+        
+
+        
+      </>
+    );
+  }
+}
