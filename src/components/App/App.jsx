@@ -3,7 +3,7 @@ import { ContactList } from 'components/ContactList';
 import { Filter } from 'components/Filter';
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
-import { Button, Form, Input, Item, Label, List, PhonebookTitle, Wrapper } from './App.styled';
+import { PhonebookTitle, Wrapper } from './App.styled';
 
 export class App extends Component {
   state = {
