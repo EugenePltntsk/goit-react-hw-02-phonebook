@@ -14,22 +14,29 @@ export class App extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
-   
   };
 
   deleteContactFromState = e => {
-    this.setState({ contacts: this.state.contacts.filter(item => e.target.dataset.id !== item.id) })
-   
-  }
+    this.setState({
+      contacts: this.state.contacts.filter(
+        item => e.target.dataset.id !== item.id
+      ),
+    });
+  };
 
   saveDataFromInput = e => {
-    
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   saveDataToState = (name, number) => {
-   if (this.state.contacts.some(item => item.name.toLowerCase() === name.toLowerCase() )) { return alert(`${name} is already in contact`)}
+    if (
+      this.state.contacts.some(
+        item => item.name.toLowerCase() === name.toLowerCase()
+      )
+    ) {
+      return alert(`${name} is already in contact`);
+    }
     const newContact = {
       id: nanoid(),
       name,
@@ -38,27 +45,25 @@ export class App extends Component {
     this.setState(prevState => ({
       contacts: [...prevState.contacts, newContact],
     }));
-    
   };
 
   getFilteredContacts = e => {
-    return this.state.contacts.filter(item => item.name.toLowerCase().includes(this.state.filter.toLowerCase()))
-  }
+    return this.state.contacts.filter(item =>
+      item.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
+  };
 
   render() {
-    
     return (
       <Wrapper>
-      <PhonebookTitle>Phonebook</PhonebookTitle>
-       <ContactForm saveDataToState={this.saveDataToState}/>
-       
-       
-<Filter value={this.state.filter} change={this.saveDataFromInput}/>
-        <ContactList deleteContact={this.deleteContactFromState} contacts={this.getFilteredContacts()} />
+        <PhonebookTitle>Phonebook</PhonebookTitle>
+        <ContactForm saveDataToState={this.saveDataToState} />
 
-        
-
-        
+        <Filter value={this.state.filter} change={this.saveDataFromInput} />
+        <ContactList
+          deleteContact={this.deleteContactFromState}
+          contacts={this.getFilteredContacts()}
+        />
       </Wrapper>
     );
   }

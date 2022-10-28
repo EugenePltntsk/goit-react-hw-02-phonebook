@@ -4,7 +4,6 @@ import { Label } from './Filter.styled';
 import { Input } from './Filter.styled';
 
 export function Filter({ value, change }) {
- 
   return (
     <Label>
       Find contacts by name
