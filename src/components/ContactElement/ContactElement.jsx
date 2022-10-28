@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Item } from './ContactElement.styled';
+import { Button, Item } from './ContactElement.styled';
 
-export function ContactElement({ name, number }) {
+export function ContactElement({ name, number, id, deleteContact }) {
+
+
+
   return (
     <Item>
-      Name: {name} Phone number: {number}
+      {name}: {number}
+      <Button onClick={deleteContact} data-id={id}>Delete contact</Button>
     </Item>
   );
 }
@@ -14,4 +18,5 @@ ContactElement.propTypes = {
 
     name: PropTypes.string.isRequired,
     number: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
 };

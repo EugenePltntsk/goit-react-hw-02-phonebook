@@ -1,12 +1,19 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Label } from './Filter.styled';
+import { Input } from './Filter.styled';
 
-export function Filter(props) {
+export function Filter({ value, change }) {
+ 
   return (
-    <div>Filter</div>
-  )
+    <Label>
+      Find contacts by name
+      <Input name="filter" value={value} onChange={change} type="text" />
+    </Label>
+  );
 }
 
-Filter.propTypes = {}
-
-
+Filter.propTypes = {
+  value: PropTypes.string.isRequired,
+  change: PropTypes.func.isRequired,
+};

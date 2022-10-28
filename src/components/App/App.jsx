@@ -1,8 +1,9 @@
 import { ContactForm } from 'components/ContactForm';
 import { ContactList } from 'components/ContactList';
+import { Filter } from 'components/Filter';
 import { nanoid } from 'nanoid';
 import { Component } from 'react';
-import { Button, Form, Input, Item, Label, List } from './App.styled';
+import { Button, Form, Input, Item, Label, List, PhonebookTitle, Wrapper } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -16,13 +17,19 @@ export class App extends Component {
    
   };
 
+  deleteContactFromState = e => {
+    this.setState({ contacts: this.state.contacts.filter(item => e.target.dataset.id !== item.id) })
+   
+  }
+
   saveDataFromInput = e => {
+    
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
   saveDataToState = (name, number) => {
-   
+   if (this.state.contacts.some(item => item.name.toLowerCase() === name.toLowerCase() )) { return alert(`${name} is already in contact`)}
     const newContact = {
       id: nanoid(),
       name,
@@ -41,26 +48,18 @@ export class App extends Component {
   render() {
     
     return (
-      <>
+      <Wrapper>
+      <PhonebookTitle>Phonebook</PhonebookTitle>
        <ContactForm saveDataToState={this.saveDataToState}/>
        
-        <Label>
-          {' '}
-          Find contacts by name
-          <Input
-            name="filter"
-            value={this.state.filter.trim()}
-            onChange={this.saveDataFromInput}
-            type="text"
-          />
-        </Label>
-
-        <ContactList contacts={this.getFilteredContacts()} />
+       
+<Filter value={this.state.filter} change={this.saveDataFromInput}/>
+        <ContactList deleteContact={this.deleteContactFromState} contacts={this.getFilteredContacts()} />
 
         
 
         
-      </>
+      </Wrapper>
     );
   }
 }
